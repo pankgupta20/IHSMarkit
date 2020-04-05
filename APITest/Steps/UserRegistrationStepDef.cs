@@ -17,8 +17,8 @@ namespace TestProject.APITest.Steps
         {
             UserDetails userDetails = new UserDetails
             {
-                Email = email,
-                Password = password
+                email = email,
+                password = password
             };
 
            _restRequest = CommonMethods.CreatePostRequest(userDetails);
