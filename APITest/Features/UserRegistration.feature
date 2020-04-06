@@ -10,7 +10,7 @@ When I send the '<email>' and '<password>' in the payload
 Then Response is returned with code '<responsecode>'
 Examples: 
 | email              | password | endpoint | responsecode |
-| testuser@reqres.in | password | /register  | Created    |
+| eve.holt@reqres.in | password | /register  | OK	      |
 
 @API
 Scenario Outline: Verify the user is not registered when password in Blank
@@ -19,4 +19,4 @@ When I send the '<email>' and '<password>' in the payload
 Then Response is returned with code '<responsecode>'
 Examples: 
 | email              | password | endpoint | responsecode |
-| testuser@reqres.in |          | /register  | BadRequest |
+| eve.holt@reqres.in |          | /register  | BadRequest |

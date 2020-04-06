@@ -1,13 +1,14 @@
 ﻿using OpenQA.Selenium;
 using System;
+using TestProject.UITest.Utilities;
 
 namespace TestProject.UITest.Pages
 {
-    public class LoginPage
+    public class LoginPage:BasePage
     {
         private readonly IWebDriver _driver;
 
-        public LoginPage(IWebDriver driver)
+        public LoginPage(IWebDriver driver):base(driver)
         {
             _driver = driver;
         }
@@ -22,8 +23,8 @@ namespace TestProject.UITest.Pages
 
         public void Login(string uname, string password)
         {
-            Email.SendKeys(uname);
-            Password.SendKeys(password);
+            Email.SendInput(uname,TimeSpan.FromSeconds(1));
+            Password.SendInput(password, TimeSpan.FromSeconds(1));
         }
 
         public void Submit()
@@ -33,11 +34,7 @@ namespace TestProject.UITest.Pages
 
         public string GetErrorMessage()
         {
-            if (!(ErrorMessage.Text == ""))
-            {
-                return ErrorMessage.Text;
-            }
-            return string.Empty;
+            return ErrorMessage.GetText();
         }
     }
 }

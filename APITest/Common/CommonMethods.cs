@@ -1,4 +1,5 @@
-﻿using RestSharp;
+﻿using Newtonsoft.Json.Linq;
+using RestSharp;
 using System;
 using System.IO;
 
@@ -16,13 +17,14 @@ namespace TestProject.Common
             return _client = new RestClient(url);
         }
 
-        public static RestRequest CreatePostRequest(Object obj)
+        public static RestRequest CreatePostRequest(JObject body)
         {
             _restRequest = new RestRequest(Method.POST)
             {
                 UseDefaultCredentials = true,
             };
-            _restRequest.AddJsonBody(obj);
+            _restRequest.AddParameter("application/json", body, ParameterType.RequestBody);
+           
             return _restRequest;
         }
 
@@ -33,6 +35,12 @@ namespace TestProject.Common
                 UseDefaultCredentials = true,
             };
             return _restRequest;
+        }
+
+        public static JObject GetJsonObject(Object o)
+        {
+            JObject jObject = JObject.FromObject(o);
+            return jObject;
         }
     }
 }

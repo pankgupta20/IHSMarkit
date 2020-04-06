@@ -1,4 +1,6 @@
-﻿using NUnit.Framework;
+﻿
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Newtonsoft.Json.Linq;
 using RestSharp;
 using TechTalk.SpecFlow;
 using TestProject.Common;
@@ -21,7 +23,8 @@ namespace TestProject.APITest.Steps
                 password = password
             };
 
-           _restRequest = CommonMethods.CreatePostRequest(userDetails);
+            JObject body = CommonMethods.GetJsonObject(userDetails);
+            _restRequest = CommonMethods.CreatePostRequest(body);
         }
 
         [Then(@"Response is returned with code '(.*)'")]
