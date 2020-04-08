@@ -45,8 +45,5 @@ namespace TestProject.UITest.Base
             _driver?.Quit();
             _driver?.Dispose();
         }
-
-
-
     }
 }

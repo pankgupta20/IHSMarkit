@@ -129,12 +129,25 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UITest\Hooks\Hooks.cs" />
     <Compile Include="UITest\Driver\DriverFactory.cs" />
-    <Compile Include="UITest\Pages\BasePage.cs" />
-    <Compile Include="UITest\Pages\HomePage.cs" />
-    <Compile Include="UITest\Pages\LoginPage.cs" />
-    <Compile Include="UITest\Steps\AutomationPracticeStepDef.cs" />
-    <Compile Include="UITest\Utilities\Constants.cs" />
-    <Compile Include="UITest\Utilities\WebElementExtension.cs" />
+    <Compile Include="UITest\PageAction\HomePageAction.cs" />
+    <Compile Include="UITest\Pages\BasePage\BasePage.cs" />
+    <Compile Include="UITest\Pages\AutomationPractice\HomePage.cs" />
+    <Compile Include="UITest\Pages\AutomationPractice\LoginPage.cs" />
+    <Compile Include="UITest\Pages\Expedia\ExHomePage.cs" />
+    <Compile Include="UITest\Pages\Expedia\ExSummaryPage.cs" />
+    <Compile Include="UITest\Pages\Expedia\ExResultPage.cs" />
+    <Compile Include="UITest\Settings\Url.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Url.settings</DependentUpon>
+    </Compile>
+    <Compile Include="UITest\Steps\AutomationPractice\UserLoginStepDef.cs" />
+    <Compile Include="UITest\Steps\Expedia\FlightSearchStepDef.cs" />
+    <Compile Include="UITest\Helpers\UtilMethods.cs" />
+    <Compile Include="UITest\Helpers\WebDriverExtension.cs" />
+    <Compile Include="UITest\Helpers\WebElementExtension.cs" />
+    <Compile Include="UITest\Utilities\Loggers.cs" />
+    <Compile Include="UITest\Utilities\TestUrl.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="APITest\Features\GetUser.feature" />
@@ -145,7 +158,12 @@
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="UITest\Features\AutomationPractice.feature" />
+    <None Include="UITest\Features\AutomationPractice\UserLogin.feature" />
+    <None Include="UITest\Features\Expedia\FlightSearch.feature" />
+    <None Include="UITest\Settings\Url.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Url.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="TestResults\" />

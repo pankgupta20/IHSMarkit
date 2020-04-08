@@ -8,12 +8,12 @@ using TestProject.UITest.Utilities;
 namespace TestProject.UITest.Steps
 {
     [Binding]
-    public class AutomationPracticeStepDef
+    public class UserLoginStepDef
     {
         private readonly LoginPage loginPage;
         private readonly HomePage homePage;
 
-        public AutomationPracticeStepDef(IWebDriver driver)
+        public UserLoginStepDef(IWebDriver driver)
         {
             loginPage = new LoginPage(driver);
             homePage = new HomePage(driver);
@@ -22,7 +22,7 @@ namespace TestProject.UITest.Steps
         [Given(@"User is at Home page")]
         public void GivenUserIsAtHomePage()
         {
-            homePage.OpenUrl(Constants.AutomationPracticeUrl);
+            homePage.OpenUrl(homePage.AutomationPracticeUrl);
         }
 
         [Given(@"navigates to Login Page")]
