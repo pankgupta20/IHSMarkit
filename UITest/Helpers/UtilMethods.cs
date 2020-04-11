@@ -3,9 +3,6 @@ using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TestProject.UITest.Pages;
 
 namespace TestProject.UITest.Utilities
 {
@@ -13,16 +10,16 @@ namespace TestProject.UITest.Utilities
     {
         public static void EnterDataAndSelectFromList(IWebElement element, IList<IWebElement> cityList, string city, IWebDriver driver)
         {
-            if (element.IsElementEnabled(TimeSpan.FromSeconds(2)))
+            if (element.IsElementEnabled(TimeSpan.FromMilliseconds(ConfigFile.ShortTimeout)))
             {
-                element.SendInput(city, TimeSpan.FromSeconds(2));
-                cityList.SelectFromList(city).ClickBtn(driver);
+                element.SendInput(city, TimeSpan.FromMilliseconds(ConfigFile.ShortTimeout));
+                cityList.SelectFromListWithGivenText(city).ClickBtn(driver);
             }
         }
 
         public static void ClickButton(IWebElement element, IWebDriver driver)
         {
-            if (element.IsElementVisible(TimeSpan.FromSeconds(2)))
+            if (element.IsElementVisible(TimeSpan.FromMilliseconds(ConfigFile.ShortTimeout)))
             {
                 element.ClickBtn(driver);
             }
@@ -30,9 +27,9 @@ namespace TestProject.UITest.Utilities
 
         public static void EnterData(IWebElement element,string data)
         {
-            if (element.IsElementVisible(TimeSpan.FromSeconds(2)))
+            if (element.IsElementVisible(TimeSpan.FromMilliseconds(ConfigFile.ShortTimeout)))
             {
-                element.SendInput(data,TimeSpan.FromSeconds(2));
+                element.SendInput(data,TimeSpan.FromMilliseconds(ConfigFile.ShortTimeout));
             }
         }
 
@@ -52,7 +49,7 @@ namespace TestProject.UITest.Utilities
 
         public static void WaitForPageLoaded(IWebDriver driver,int timeout)
         {
-            IWait<IWebDriver> wait = new WebDriverWait(driver, TimeSpan.FromSeconds(timeout));
+            IWait<IWebDriver> wait = new WebDriverWait(driver, TimeSpan.FromMilliseconds(timeout));
             for (int retry = 1; retry <= 3; retry++)
             {
                 try

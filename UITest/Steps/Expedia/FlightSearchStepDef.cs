@@ -1,8 +1,9 @@
 ﻿using OpenQA.Selenium;
 using TechTalk.SpecFlow;
+using TestProject.UITest.Helpers;
+using TestProject.UITest.Models;
 using TestProject.UITest.PageAction;
 using TestProject.UITest.Pages.Expedia;
-using TestProject.UITest.Utilities;
 
 namespace TestProject.UITest.Steps.Expedia
 {
@@ -13,6 +14,11 @@ namespace TestProject.UITest.Steps.Expedia
         private readonly ExHomePage homePage;
         private readonly ExSummaryPage summaryPage;
         private readonly HomePageAction homePageAction;
+        private readonly ResultPageAction resultPageAction;
+        private readonly SummaryPageAction summaryPageAction;
+        private string _singleTicketPrice;
+        private FlightDetails _flightDetails;
+       
 
         public FlightSearchStepDef(IWebDriver driver)
         {
@@ -20,6 +26,8 @@ namespace TestProject.UITest.Steps.Expedia
             homePage = new ExHomePage(driver);
             summaryPage = new ExSummaryPage(driver);
             homePageAction = new HomePageAction(driver);
+            resultPageAction = new ResultPageAction(driver);
+            summaryPageAction = new SummaryPageAction(driver);
         }
 
         [Given(@"User is at Flight Search page")]
@@ -35,11 +43,14 @@ namespace TestProject.UITest.Steps.Expedia
             homePage.ClickMutiCityTab();
         }
 
-        [When(@"user enters required details '(.*)','(.*)','(.*)','(.*)','(.*)','(.*)','(.*)'")]
-        public void WhenUserEntersRequiredDetails(string flyfrom1, string flyto1, string departdate1, string travelers, string flyfrom2, string flyto2, string departdate2)
+        [When(@"user enters required flight search details")]
+        public void WhenUserEntersRequiredFlightSearchDetails()
         {
-            homePageAction.EnterFlightDetails(flyfrom1,flyto1,departdate1,travelers,flyfrom2,flyto2,departdate2);
+            _flightDetails = TestDataReader.DeserializefromTestDataFile<FlightDetails>("FlightDetails.json");
+            homePageAction.EnterFlightDetails(_flightDetails.Cities[0].CityFrom, _flightDetails.Cities[0].CityTo, _flightDetails.DepartureDates[0].DepartDate,
+                _flightDetails.Travelers, _flightDetails.Cities[1].CityFrom, _flightDetails.Cities[1].CityTo, _flightDetails.DepartureDates[1].DepartDate);
         }
+
 
         [When(@"Click on the search button and check the results")]
         public void WhenClickOnTheSearchButtonAndCheckTheResults()
@@ -50,16 +61,18 @@ namespace TestProject.UITest.Steps.Expedia
         [When(@"Click the first result and then further click the first result under it")]
         public void WhenClickTheFirstResultAndThenFurtherClickTheFirstResultUnderIt()
         {
-            resultPage.ClickSelectBtn();
-            var SingleTicketPrice = resultPage.GetSingleTicketPrice();
-            resultPage.ClickSelectBtn();
+            _singleTicketPrice = resultPageAction.SelectFlight();
         }
 
         [Then(@"verify the flight details and total price")]
         public void ThenVerifyTheFlightDetailsAndTotalPrice()
         {
-            var TotalTicketsPrice = summaryPage.GetTotalPrice();
+           //single ticket price on summary page is calculated in round number, so assertion is failing when calculating for 4 adults.
+           // Now taking the single price also summary page and validate it:
 
+            summaryPageAction.ValidateFlightCities(_flightDetails);
+            summaryPageAction.ValidateFlightDates(_flightDetails);
+            summaryPageAction.ValidateTotalTicketPrice();
         }
 
     }

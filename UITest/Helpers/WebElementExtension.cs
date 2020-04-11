@@ -64,7 +64,7 @@ namespace TestProject.UITest.Utilities
             {
                 try
                 {
-                    element.IsElementVisible(TimeSpan.FromMilliseconds(10000));
+                    element.IsElementVisible(TimeSpan.FromMilliseconds(ConfigFile.Timeout));
                     if (driver != null)
                         element.ScrollToView(driver);
                     SelectElement selectEle = new SelectElement(element);
@@ -108,7 +108,7 @@ namespace TestProject.UITest.Utilities
                 }
                 catch (Exception)
                 {
-                    Thread.Sleep(TimeSpan.FromSeconds(2));
+                    Thread.Sleep(TimeSpan.FromSeconds(ConfigFile.ShortTimeout));
                 }
             }
             while (watch.Elapsed <= timeout);
@@ -149,29 +149,29 @@ namespace TestProject.UITest.Utilities
 
             while (watch.Elapsed <= timeOut)
             {
-                if (element.IsElementVisible(TimeSpan.FromMilliseconds(500)))
+                if (element.IsElementVisible(TimeSpan.FromMilliseconds(ConfigFile.ShortTimeout)))
                     break;
             }
         }
 
-        public static IWebElement SelectFromList(this IList<IWebElement> elements, string text)
+        public static IWebElement SelectFromListWithGivenText(this IList<IWebElement> elements, string text)
         {
             return elements.FirstOrDefault(i => i.Text.Contains(text));
         }
 
         public static IWebElement SelectVisibleElementFromList(this IList<IWebElement> elements)
         {
-            return elements.FirstOrDefault(i => i.IsElementVisible(TimeSpan.FromSeconds(2)));
+            return elements.FirstOrDefault(i => i.IsElementVisible(TimeSpan.FromMilliseconds(ConfigFile.ShortTimeout)));
         }
 
         public static void ClickBtn(this IWebElement element, IWebDriver driver)
         {
             try
             {
-                if (element.IsElementEnabled(TimeSpan.FromSeconds(10)))
+                if (element.IsElementEnabled(TimeSpan.FromMilliseconds(ConfigFile.Timeout)))
                 {
                     element.Click();
-                    UtilMethods.WaitForPageLoaded(driver, 30);
+                    UtilMethods.WaitForPageLoaded(driver, Convert.ToInt32(ConfigFile.PageLoadTimeout));
                 }
             }
             catch (Exception ex)
@@ -180,16 +180,60 @@ namespace TestProject.UITest.Utilities
             }
         }
 
-        public static void WaitForElementsToLoad(this IList<IWebElement> elementsList, int timeOut = 20)
+        public static void WaitForElementsToLoad(this IList<IWebElement> elementsList, int timeOut = 20000)
         {
             Stopwatch watch = Stopwatch.StartNew();
-            TimeSpan timeOutInSec = TimeSpan.FromSeconds(timeOut);
+            TimeSpan timeOutInSec = TimeSpan.FromMilliseconds(timeOut);
             do
             {
                 int elementsCount = elementsList.Count;
-                if (elementsCount > 0 && elementsList[elementsCount - 1].IsElementVisible(TimeSpan.FromSeconds(5)))
+                if (elementsCount > 0 && elementsList[elementsCount - 1].IsElementVisible(TimeSpan.FromMilliseconds(ConfigFile.Timeout)))
                     break;
             } while (watch.Elapsed <= timeOutInSec);
+        }
+
+        public static void WaitForElementLoadTillTextDisplayed(this IWebElement element,int timeOut = 60)
+        {
+            DefaultWait<IWebElement> wait = new DefaultWait<IWebElement>(element)
+            {
+                Timeout = TimeSpan.FromSeconds(timeOut),
+                PollingInterval = TimeSpan.FromMilliseconds(ConfigFile.PollingInterval),
+            };
+
+            Func<IWebElement, bool> waiter = new Func<IWebElement, bool>((IWebElement ele) =>
+            {
+                string elementText = element.Text;
+                if (elementText.Length>0)
+                {
+                    return true;
+                }
+                Logger.WriteInfo($"element is not displayed: {elementText}");
+                return false;
+            });
+            wait.Until(waiter);
+        }
+
+        public static bool WaitForElementAttribute(this IWebElement element, string value)
+        {
+            bool result = false;
+            DefaultWait<IWebElement> wait = new DefaultWait<IWebElement>(element)
+            {
+                Timeout = TimeSpan.FromMilliseconds(ConfigFile.ShortTimeout),
+                PollingInterval = TimeSpan.FromMilliseconds(ConfigFile.PollingInterval)
+            };
+
+            Func<IWebElement, bool> waiter = new Func<IWebElement, bool>((IWebElement ele) =>
+            {
+                string styleAttrib = element.GetAttribute("style");
+                if (styleAttrib.Contains(value))
+                {
+                   return result = true;
+                }
+                Console.WriteLine("Percentage is still " + styleAttrib);
+                return result;
+            });
+            wait.Until(waiter);
+            return result;
         }
     }
 }

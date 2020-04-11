@@ -92,17 +92,19 @@ namespace TestProject.UITest.Features.Expedia
             testRunner.CollectScenarioErrors();
         }
         
-        public virtual void VerifyTheFlightSearchFunctionalityAndTotalPrice(string flyfrom1, string goingto1, string departureDate1, string travelers, string flyfrom2, string goingto2, string departureDate2, string[] exampleTags)
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Verify the Flight Search Functionality and total price")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "AutomationPractice Flight Search Feature")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("Web")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("Expedia")]
+        public virtual void VerifyTheFlightSearchFunctionalityAndTotalPrice()
         {
-            string[] @__tags = new string[] {
+            string[] tagsOfScenario = new string[] {
                     "Web",
                     "Expedia"};
-            if ((exampleTags != null))
-            {
-                @__tags = System.Linq.Enumerable.ToArray(System.Linq.Enumerable.Concat(@__tags, exampleTags));
-            }
-            string[] tagsOfScenario = @__tags;
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Verify the Flight Search Functionality and total price", null, @__tags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Verify the Flight Search Functionality and total price", null, new string[] {
+                        "Web",
+                        "Expedia"});
 #line 8
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -130,7 +132,7 @@ testRunner.Given("User is at Flight Search page", ((string)(null)), ((TechTalk.S
 testRunner.And("clicked on Flights and multicity tab", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 11
-testRunner.When(string.Format("user enters required details \'{0}\',\'{1}\',\'{2}\',\'{3}\',\'{4}\',\'{5}\',\'{6}\'", flyfrom1, goingto1, departureDate1, travelers, flyfrom2, goingto2, departureDate2), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+testRunner.When("user enters required flight search details", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 12
 testRunner.And("Click on the search button and check the results", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
@@ -143,26 +145,6 @@ testRunner.Then("verify the flight details and total price", ((string)(null)), (
 #line hidden
             }
             this.ScenarioCleanup();
-        }
-        
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Verify the Flight Search Functionality and total price: Delhi")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "AutomationPractice Flight Search Feature")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("Web")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("Expedia")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("VariantName", "Delhi")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:Flyfrom1", "Delhi")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:Goingto1", "Mumbai")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:DepartureDate1", "05/05/2020")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:Travelers", "4")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:Flyfrom2", "Mumbai")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:Goingto2", "Delhi")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:DepartureDate2", "05/12/2020")]
-        public virtual void VerifyTheFlightSearchFunctionalityAndTotalPrice_Delhi()
-        {
-#line 8
-this.VerifyTheFlightSearchFunctionalityAndTotalPrice("Delhi", "Mumbai", "05/05/2020", "4", "Mumbai", "Delhi", "05/12/2020", ((string[])(null)));
-#line hidden
         }
     }
 }

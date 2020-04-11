@@ -5,13 +5,10 @@
 
 @Web
 @Expedia
-Scenario Outline: Verify the Flight Search Functionality and total price
+Scenario: Verify the Flight Search Functionality and total price
 Given User is at Flight Search page  
 And clicked on Flights and multicity tab
-When user enters required details '<Flyfrom1>','<Goingto1>','<DepartureDate1>','<Travelers>','<Flyfrom2>','<Goingto2>','<DepartureDate2>' 
+When user enters required flight search details
 And Click on the search button and check the results
 And Click the first result and then further click the first result under it
 Then verify the flight details and total price
-Examples:
-| Flyfrom1 | Goingto1 | DepartureDate1  | Travelers | Flyfrom2 | Goingto2 | DepartureDate2 |
-|  Delhi   |   Mumbai |	05/05/2020	    |  4        | Mumbai   | Delhi    | 05/12/2020    |

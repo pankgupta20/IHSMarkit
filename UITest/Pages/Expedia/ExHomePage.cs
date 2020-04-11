@@ -63,25 +63,25 @@ namespace TestProject.UITest.Pages.Expedia
         public void ClickFlyFrom1(string city)
         {
             UtilMethods.EnterData(FlyFrom1,city);
-            CityDropDownList.SelectFromList(city);
+            CityDropDownList.SelectFromListWithGivenText(city);
         }
 
         public void ClickFlyTo1(string city)
         {
             UtilMethods.EnterData(GoingTo1,city);
-            CityDropDownList.SelectFromList(city);
+            CityDropDownList.SelectFromListWithGivenText(city);
         }
 
         public void ClickFlyFrom2(string city)
         {
             UtilMethods.EnterData(FlyFrom2, city);
-            CityDropDownList.SelectFromList(city);
+            CityDropDownList.SelectFromListWithGivenText(city);
         }
 
         public void ClickFlyTo2(string city)
         {
             UtilMethods.EnterData(GoingTo2, city);
-            CityDropDownList.SelectFromList(city);
+            CityDropDownList.SelectFromListWithGivenText(city);
         }
 
         public void EnterDepartingDate1(string dateValue)
@@ -103,7 +103,6 @@ namespace TestProject.UITest.Pages.Expedia
 
                     if (TravelerCount.GetText().Equals(number))
                         break;
-
                 } while (watch.Elapsed<=timeout);
             }
             if (TravelerAddLink.IsElementVisible(Wait(1)))
@@ -124,6 +123,7 @@ namespace TestProject.UITest.Pages.Expedia
             if (SearchBtn.IsElementEnabled(Wait(2)))
             {
                 SearchBtn.ClickBtn(_driver);
+                _driver.CloseExtraWindows();
             }
         }
 

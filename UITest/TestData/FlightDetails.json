@@ -1,0 +1,21 @@
+﻿{
+   "Cities":[
+      {
+         "CityFrom":"Delhi",
+         "CityTo":"Bombay"
+      },
+      {
+         "CityFrom":"Bombay",
+         "CityTo":"Delhi"
+      }
+   ],
+   "DepartureDates":[
+      {
+         "DepartDate":"05/05/2020"
+      },
+      {
+         "DepartDate":"05/12/2020"
+      }
+   ],
+   "Travelers":"4"
+}
